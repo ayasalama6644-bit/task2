@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+   class Student {
+    constructor(id,name,grades,attendance) {
+        this.id = id;
+        this.name = name;
+        this.grades =grades;
+        this.attendance =attendance;
+    }
+   getAverage()  {
+if (this.grades.length ===0) return 0;
+const sum =this.grades.reduce((total, grade) => total+grade ,0);
+return sum / this.grades.length;
+   }
+getGrade() {
+    const avg =this.getAverage();
+    if (avg >= 90) return "A";
+    else if (avg >=80) return "B";
+    else if (avg >=70) return "C";
+    else if (avg >=60) return "D";
+    else if (avg >=50) return "E";
+    else return "F";
+}
+getResult() {
+    const avg = this.getAverage();
+    if (avg >=50 && this.attendance >=75) {
+    return "ناجح";
+} else {
+return"يحتاج مراجعه";
+}
+   }
+}
+const StudentList =[ 
+    new Student("Ahmed" ,[90,85,92], 90), 
+    new Student("mona",[70,65,75,], 80),
+    new Student("Omar",[45,42,48], 70),
+    new Student("sara",[40,49,44],60)
+];
+const strugglingStudents =StudentList.filter(s => s.getAverage()>=40&& s.getAverage() <=49);
+const supportedStudents =strugglingStudents.map(s => {
+    s.grades = s.grades.map(g=> g +5);
+    return s;});
+    const total=supportedStudents.reduce((sum, s) => sum +s.getAverage(), 0);
+    const mercyAverage =supportedStudents.length===0?0 : total /supportedStudents.length;
+    console.log("الطلاب المتعترين:",strugglingStudents);
+    console.log("متوسط الرأفه",mercyAverage);
+StudentList.ForEach(s => {
+    console.log("الاسم:" ,s.name,"المتوسط",s.getAverage(),"التقدير:",s.getGrade(),"النتيجه:",s.getResult());
+});
+console.log("الطلاب المتعثرين الذين شملتهم الرأفة:",strugglingStudents);
+ </script>
+</body>
+/html>
